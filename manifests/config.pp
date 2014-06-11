@@ -40,7 +40,7 @@ class aide::config {
       }
 
       concat::fragment { 'aide_header':
-        ensure  => present,
+        ensure  => $aide::manage_file,
         order   => '01',
         target  => $aide::config_file,
         source  => $aide::manage_file_source,
