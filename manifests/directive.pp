@@ -39,7 +39,7 @@ define aide::directive (
       default   => undef,
       undef     => $name,
     },
-    default   => $content,
+    default   => "${content}\n",
   }
 
   case $aide::config {
