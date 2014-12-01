@@ -117,13 +117,18 @@ class aide (
   $update_db           = params_lookup( 'update_db' ),
   $binary_path         = params_lookup( 'binary_path' ),
   $db_name             = params_lookup( 'db_name' ),
-  $db_tmp_name         = params_lookup( 'db_tmp_name' )
+  $db_tmp_name         = params_lookup( 'db_tmp_name' ),
+  $directives          = params_lookup( 'directives' ),
+  $cron                = params_lookup( 'cron' ),
+  $cron_hour           = params_lookup( 'cron_hour'),
+  $cron_minute         = params_lookup( 'cron_minute' )
   ) inherits aide::params {
 
   $bool_absent=any2bool($absent)
   $bool_disable=any2bool($disable)
   $bool_debug=any2bool($debug)
   $bool_audit_only=any2bool($audit_only)
+  $bool_cron=any2bool($cron)
 
   ### Definition of some variables used in the module
   $manage_package = $aide::bool_absent ? {
@@ -175,6 +180,12 @@ class aide (
   ### Include dependencies provided by other Example42 modules
   if $dependency_class {
     require $aide::dependency_class
+  }
+
+  ### Create directives for integration with Hiera
+  if $directives != {} {
+    validate_hash($directives)
+    create_resources(aide::directive, $directives)
   }
 
   class { 'aide::install': } ->

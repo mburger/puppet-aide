@@ -73,6 +73,10 @@ class aide::params {
   $disable = false
   $disableboot = false
   $update_db = false
+  $directives = {}
+  $cron = false
+  $cron_hour = 7
+  $cron_minute = 0
 
   ### General module variables that can have a site or per module default
   $debug = false
